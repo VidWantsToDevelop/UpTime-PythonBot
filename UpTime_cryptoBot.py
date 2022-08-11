@@ -26,6 +26,7 @@ names = []
 prices = []
 daily_changes = []
 weekly_changes = []
+icons = []
 
 # Get all currencies + fill the names list
 coins = soup.select("tbody tr")
@@ -39,10 +40,12 @@ for i in range(10):
 for i in range(10):
     coin = coins[i].select("span")
     prices.append(coin[2].get_text())
+    icons.append(coins[i].find_next("img", {"class": "coin-logo"})["src"])
     daily_changes.append(
         [coin[5].get_text(), coin[5].find_next("span")["class"][0]])
     weekly_changes.append(
         [coin[7].get_text(), coin[7].find_next("span")["class"][0]])
+print(icons)
 
 tbody = """"""
 
@@ -53,6 +56,7 @@ for i in range(10):
    {i+1}
   </td>
   <td>
+   <img src="{icons[i]}" height="20" width="20" alt="logo"/>
    {names[i][0] + " | " + names[i][1]}
   </td>
   <td>
@@ -66,14 +70,15 @@ for i in range(10):
   </td>
  </tr>
   \n"""
+print(tbody)
 
 # %%
 # SMTPLIB email sender
 port = 587
 smtp_server = "smtp.gmail.com"
-sender_email = "WHAT DO YOU"
-receiver_email = "WANT TO"
-password = "FIND HERE?"
+sender_email = "OI"
+receiver_email = "DON'T LOOK"
+password = "HERE"
 
 message = MIMEMultipart("message")
 message["Subject"] = "UpTime Update"
@@ -87,6 +92,7 @@ html_message = f"""\
   </body>
  </html>
  """
+print(html_message)
 
 message_object = MIMEText(html_message, "html")
 
